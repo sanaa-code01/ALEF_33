@@ -25,12 +25,12 @@ public abstract class DocumentLine {
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "unit_price_ht", nullable = false, precision = 12, scale = 2)
     private BigDecimal unitPriceHT;
 
-    @Column(nullable = false, precision = 5, scale = 2)
+    @Column(name = "vat_rate", nullable = false, precision = 5, scale = 2)
     private BigDecimal vatRate;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "line_total_ht", nullable = false, precision = 12, scale = 2)
     private BigDecimal lineTotalHT = BigDecimal.ZERO;
 }

@@ -23,10 +23,10 @@ public class Product extends BaseEntity {
     @Column(length = 1000)
     private String description;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "unit_price_ht", nullable = false, precision = 12, scale = 2)
     private BigDecimal unitPriceHT;
 
-    @Column(nullable = false, precision = 5, scale = 2)
+    @Column(name = "vat_rate", nullable = false, precision = 5, scale = 2)
     private BigDecimal vatRate = new BigDecimal("20.00");   // TVA Maroc 20 %
 
     private boolean active = true;

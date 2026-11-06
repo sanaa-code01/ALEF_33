@@ -18,13 +18,13 @@ public abstract class SalesDocument extends BaseEntity {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "total_ht", nullable = false, precision = 12, scale = 2)
     private BigDecimal totalHT = BigDecimal.ZERO;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "total_vat", nullable = false, precision = 12, scale = 2)
     private BigDecimal totalVat = BigDecimal.ZERO;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(name = "total_ttc", nullable = false, precision = 12, scale = 2)
     private BigDecimal totalTTC = BigDecimal.ZERO;
 
     @Column(length = 1000)

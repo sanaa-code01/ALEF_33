@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
     Optional<Quote> findByNumber(String number);
+    Optional<Quote> findTopByNumberStartingWithOrderByNumberDesc(String prefix);
 }
