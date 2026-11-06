@@ -31,6 +31,7 @@ public class OrderService {
     private final PricingService pricingService;
     private final DocumentNumberService numberService;
     private final LineMapper lineMapper;
+    private final PaymentService paymentService;
 
     @Transactional(readOnly = true)
     public CustomerOrder get(Long id) {
@@ -77,6 +78,10 @@ public class OrderService {
         invoice.setNumber(numberService.next(prefix,
                 invoiceRepository.findTopByNumberStartingWithOrderByNumberDesc(prefix).map(Invoice::getNumber)));
 
-        return invoiceRepository.save(invoice);
+        invoiceRepository.save(invoice);
+
+        // NEW: a deposit paid before the invoice already counts
+        paymentService.refreshInvoiceStatus(orderId);
+        return invoice;
     }
 }

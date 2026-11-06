@@ -12,6 +12,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findByOrderIdOrderByPaymentDateAsc(Long orderId);
 
-    @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.order.id = :orderId")
+    /** Total already paid for an order (null if no payment yet) */
+    @Query("SELECT SUM(p.amount) FROM Payment p WHERE p.order.id = :orderId")
     BigDecimal sumAmountByOrderId(@Param("orderId") Long orderId);
 }
