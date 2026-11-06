@@ -33,8 +33,19 @@ public class CustomerOrder extends SalesDocument {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderLine> lines = new ArrayList<>();
 
+    // ── NEW: payments ─────────────────────────────────────────
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("paymentDate ASC")
+    private List<Payment> payments = new ArrayList<>();
+
     public void addLine(OrderLine line) {
         lines.add(line);
         line.setOrder(this);
+    }
+
+    // ── NEW: add a payment ────────────────────────────────────
+    public void addPayment(Payment payment) {
+        payments.add(payment);
+        payment.setOrder(this);
     }
 }
