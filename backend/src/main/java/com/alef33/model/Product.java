@@ -23,8 +23,11 @@ public class Product extends BaseEntity {
     @Column(length = 1000)
     private String description;
 
+    @Column(name = "unit_price_ttc", nullable = false, precision = 12, scale = 2)
+    private BigDecimal unitPriceTTC;       // the price ALEF 33 sells at
+
     @Column(name = "unit_price_ht", nullable = false, precision = 12, scale = 2)
-    private BigDecimal unitPriceHT;
+    private BigDecimal unitPriceHT;        // calculated from the TTC price
 
     @Column(name = "vat_rate", nullable = false, precision = 5, scale = 2)
     private BigDecimal vatRate = new BigDecimal("20.00");   // TVA Maroc 20 %

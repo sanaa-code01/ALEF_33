@@ -34,16 +34,16 @@ public class LineMapper {
         line.setDesignation(firstNonNull(input.designation(),
                 product != null ? product.getDesignation() : null));
         line.setQuantity(input.quantity());
-        line.setUnitPriceHT(firstNonNull(input.unitPriceHT(),
-                product != null ? product.getUnitPriceHT() : null));
+        line.setUnitPriceTTC(firstNonNull(input.unitPriceTTC(),
+                product != null ? product.getUnitPriceTTC() : null));
         line.setVatRate(firstNonNull(input.vatRate(),
                 product != null ? product.getVatRate() : DEFAULT_VAT));
 
         if (line.getDesignation() == null || line.getDesignation().isBlank()) {
             throw new BusinessException("Each line needs a designation or a product");
         }
-        if (line.getUnitPriceHT() == null) {
-            throw new BusinessException("Each line needs a unit price or a product");
+        if (line.getUnitPriceTTC() == null) {
+            throw new BusinessException("Each line needs a unit price TTC or a product");
         }
         return line;
     }
@@ -53,8 +53,10 @@ public class LineMapper {
         target.setProduct(source.getProduct());
         target.setDesignation(source.getDesignation());
         target.setQuantity(source.getQuantity());
+        target.setUnitPriceTTC(source.getUnitPriceTTC());
         target.setUnitPriceHT(source.getUnitPriceHT());
         target.setVatRate(source.getVatRate());
+        target.setLineTotalTTC(source.getLineTotalTTC());
         target.setLineTotalHT(source.getLineTotalHT());
         return target;
     }

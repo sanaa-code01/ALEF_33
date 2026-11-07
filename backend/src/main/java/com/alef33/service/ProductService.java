@@ -63,11 +63,13 @@ public class ProductService {
     }
 
     private void apply(Product product, ProductRequest r) {
+        BigDecimal vat = r.vatRate() != null ? r.vatRate() : DEFAULT_VAT;
         product.setReference(r.reference().trim());
         product.setDesignation(r.designation().trim());
         product.setDescription(r.description());
-        product.setUnitPriceHT(r.unitPriceHT());
-        product.setVatRate(r.vatRate() != null ? r.vatRate() : DEFAULT_VAT);
+        product.setUnitPriceTTC(r.unitPriceTTC());
+        product.setVatRate(vat);
+        product.setUnitPriceHT(PricingService.htFromTtc(r.unitPriceTTC(), vat));
         product.setActive(r.active() == null || r.active());
     }
 }

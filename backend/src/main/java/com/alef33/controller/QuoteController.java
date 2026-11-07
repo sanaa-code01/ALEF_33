@@ -7,12 +7,14 @@ import com.alef33.dto.QuoteResponse;
 import com.alef33.model.CustomerOrder;
 import com.alef33.model.Quote;
 import com.alef33.service.DocumentViewService;
+import com.alef33.service.PdfService;
 import com.alef33.service.QuoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class QuoteController {
 
     private final QuoteService quoteService;
     private final DocumentViewService views;
+    private final PdfService pdfService;
 
     @GetMapping
     @Operation(summary = "List quotes (newest first)")
@@ -36,6 +39,12 @@ public class QuoteController {
     @Operation(summary = "Get one quote with its lines")
     public QuoteResponse get(@PathVariable Long id) {
         return views.quote(id);
+    }
+
+    @GetMapping("/{id}/pdf")
+    @Operation(summary = "Download the quote as a PDF")
+    public ResponseEntity<byte[]> pdf(@PathVariable Long id) {
+        return PdfResponses.of(pdfService.quotePdf(id));
     }
 
     @PostMapping

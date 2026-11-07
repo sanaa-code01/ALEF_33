@@ -10,6 +10,6 @@ public record LineInput(
         Long productId,
         String designation,
         int quantity,
-        BigDecimal unitPriceHT,
+        BigDecimal unitPriceTTC,
         BigDecimal vatRate
 ) {}

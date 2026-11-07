@@ -9,12 +9,13 @@ public record ProductResponse(
         String reference,
         String designation,
         String description,
+        BigDecimal unitPriceTTC,
         BigDecimal unitPriceHT,
         BigDecimal vatRate,
         boolean active
 ) {
     public static ProductResponse from(Product p) {
         return new ProductResponse(p.getId(), p.getReference(), p.getDesignation(),
-                p.getDescription(), p.getUnitPriceHT(), p.getVatRate(), p.isActive());
+                p.getDescription(), p.getUnitPriceTTC(), p.getUnitPriceHT(), p.getVatRate(), p.isActive());
     }
 }

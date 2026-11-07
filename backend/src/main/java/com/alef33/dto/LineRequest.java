@@ -9,15 +9,15 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-/** One line of a quote. Give a productId, or a designation + unitPriceHT for a custom line. */
+/** One line of a quote. Give a productId, or a designation + unitPriceTTC for a custom line. */
 public record LineRequest(
         Long productId,
         @Size(max = 255) String designation,
         @NotNull(message = "Quantity is required") @Min(value = 1, message = "Quantity must be at least 1") Integer quantity,
-        @DecimalMin(value = "0.0", message = "Unit price must be 0 or more") BigDecimal unitPriceHT,
+        @DecimalMin(value = "0.0", message = "Unit price must be 0 or more") BigDecimal unitPriceTTC,
         @DecimalMin("0.0") @DecimalMax("100.0") BigDecimal vatRate
 ) {
     public LineInput toInput() {
-        return new LineInput(productId, designation, quantity, unitPriceHT, vatRate);
+        return new LineInput(productId, designation, quantity, unitPriceTTC, vatRate);
     }
 }
