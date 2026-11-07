@@ -28,6 +28,14 @@ public class GlobalExceptionHandler {
         return problem;
     }
 
+    /** 401: wrong email or password at login */
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ProblemDetail handleInvalidCredentials(InvalidCredentialsException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
+        problem.setTitle("Authentication failed");
+        return problem;
+    }
+
     /** 400: the form is invalid (e.g. empty name, wrong email) */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException e) {
