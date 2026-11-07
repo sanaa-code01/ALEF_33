@@ -1,0 +1,7 @@
+# Not needed inside the image (keeps the build fast and the image small)
+target/
+.idea/
+*.iml
+.vscode/
+HELP.md
+*.log

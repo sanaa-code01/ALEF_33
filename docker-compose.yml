@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────
+# ALEF 33: backend + MySQL with one command
+#   docker compose up --build -d
+# Secrets come from the .env file (copy .env.example to .env first)
+# ─────────────────────────────────────────────────────────────
+services:
+
+  db:
+    image: mysql:8.4
+    container_name: alef33-db
+    environment:
+      MYSQL_DATABASE: alef33
+      MYSQL_USER: ${DB_USER:-alef33}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the .env file}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in the .env file}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"            # 3307 on your PC, because your own MySQL already uses 3306
+    volumes:
+      - db-data:/var/lib/mysql # data survives "docker compose down"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    mem_limit: 768m
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    image: alef33-backend
+    container_name: alef33-backend
+    depends_on:
+      db:
+        condition: service_healthy   # wait until MySQL really accepts connections
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/alef33?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Casablanca
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-alef33}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in the .env file}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@alef33.ma}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in the .env file}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:4200}
+      COMPANY_BANK_ACCOUNT: ${COMPANY_BANK_ACCOUNT:-}
+      JAVA_OPTS: -Xmx384m
+    ports:
+      - "8080:8080"
+    mem_limit: 640m
+    restart: unless-stopped
+
+volumes:
+  db-data:
