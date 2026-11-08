@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { errorMessage } from '../../core/api-error';
+import { DEMO_ACCOUNTS, isDemoMode } from '../../demo/demo-mode';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,14 @@ import { errorMessage } from '../../core/api-error';
         <button class="btn btn-primary btn-block" type="submit" [disabled]="form.invalid || loading()">
           {{ loading() ? 'Connexion…' : 'Se connecter' }}
         </button>
+
+        @if (demo) {
+          <div class="demo-login">
+            <p>Démo en ligne : connectez-vous en un clic</p>
+            <button type="button" class="btn btn-block" (click)="demoLogin('admin')">Se connecter comme administrateur</button>
+            <button type="button" class="btn btn-block" (click)="demoLogin('employee')">Se connecter comme employé</button>
+          </div>
+        }
       </form>
     </div>
   `,
@@ -35,6 +44,7 @@ export class Login {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
+  protected readonly demo = isDemoMode();
   protected readonly loading = signal(false);
   protected readonly error = signal<string | null>(null);
 
@@ -45,6 +55,11 @@ export class Login {
 
   constructor() {
     if (this.auth.isLoggedIn()) this.router.navigateByUrl('/');
+  }
+
+  demoLogin(kind: 'admin' | 'employee') {
+    this.form.setValue(DEMO_ACCOUNTS[kind]);
+    this.submit();
   }
 
   submit() {

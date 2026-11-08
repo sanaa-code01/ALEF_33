@@ -167,3 +167,12 @@ input.num { text-align: right; }
 .badge-ko { background: #fdecea; color: var(--danger); }
 .badge-big { font-size: 0.9rem; padding: 0.35rem 0.8rem; }
 @media (max-width: 1100px) { .two-columns, .grid-3 { grid-template-columns: 1fr; } }
+
+/* ── Online demo (GitHub Pages) ──────────────────────────── */
+.demo-banner {
+  background: var(--orange-light); color: var(--orange-dark); font-size: 0.85rem; font-weight: 600;
+  padding: 0.5rem 1.5rem; border-bottom: 1px solid #f3d3bd;
+}
+.demo-banner a { color: var(--orange-dark); margin-left: 0.5rem; }
+.demo-login { border-top: 1px solid var(--border); margin-top: 1.25rem; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.demo-login p { margin: 0 0 0.25rem; text-align: center; color: var(--muted); font-size: 0.85rem; }

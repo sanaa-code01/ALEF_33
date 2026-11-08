@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { isDemoMode } from '../demo/demo-mode';
 
 /** The frame around every page: ALEF 33 sidebar on the left, user bar on top */
 @Component({
@@ -25,6 +26,12 @@ import { AuthService } from '../core/auth.service';
       </aside>
 
       <div class="main">
+        @if (demo) {
+          <div class="demo-banner">
+            Mode démo : données fictives, remises à zéro à chaque rechargement de la page.
+            <a href="https://github.com/sanaa-code01/ALEF_33" target="_blank" rel="noopener">Code source sur GitHub</a>
+          </div>
+        }
         <header class="topbar">
           <span class="user">
             {{ auth.user()?.fullName }}
@@ -43,4 +50,5 @@ import { AuthService } from '../core/auth.service';
 })
 export class Shell {
   protected readonly auth = inject(AuthService);
+  protected readonly demo = isDemoMode();
 }
