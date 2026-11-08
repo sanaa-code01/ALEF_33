@@ -1,4 +1,5 @@
-// Production build (ng build): the API URL of the deployed backend (step 11)
+// Production build (ng build): the Angular app is served by the backend itself
+// (online demo), so the API is on the same address.
 export const environment = {
-  apiUrl: 'http://localhost:8080/api',
+  apiUrl: '/api',
 };

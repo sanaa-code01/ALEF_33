@@ -56,8 +56,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
-                        // Everything else: any logged-in user (ADMIN or EMPLOYEE)
-                        .anyRequest().authenticated())
+                        // The rest of the API: any logged-in user (ADMIN or EMPLOYEE)
+                        .requestMatchers("/api/**").authenticated()
+                        // Everything outside /api is the Angular app (HTML, JS, CSS, logo): public
+                        .anyRequest().permitAll())
                 // Read the JWT from the "Authorization: Bearer ..." header
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
