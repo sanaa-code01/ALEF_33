@@ -17,6 +17,10 @@ import { AuthService } from '../core/auth.service';
           <span class="nav-separator"></span>
           <a routerLink="/clients" routerLinkActive="active">Clients</a>
           <a routerLink="/produits" routerLinkActive="active">Produits</a>
+          @if (auth.isAdmin()) {
+            <span class="nav-separator"></span>
+            <a routerLink="/utilisateurs" routerLinkActive="active">Utilisateurs</a>
+          }
         </nav>
       </aside>
 

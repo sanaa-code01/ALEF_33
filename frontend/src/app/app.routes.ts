@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/auth.guard';
+import { adminGuard, authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,6 +21,11 @@ export const routes: Routes = [
       { path: 'factures', loadComponent: () => import('./features/invoices/invoices-list').then(m => m.InvoicesList) },
       { path: 'clients', loadComponent: () => import('./features/customers/customers').then(m => m.Customers) },
       { path: 'produits', loadComponent: () => import('./features/products/products').then(m => m.Products) },
+      {
+        path: 'utilisateurs',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/users/users').then(m => m.Users),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

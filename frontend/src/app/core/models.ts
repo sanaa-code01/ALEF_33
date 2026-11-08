@@ -151,3 +151,18 @@ export interface PaymentRequest {
   reference: string | null;
   notes: string | null;
 }
+
+// ── User accounts (admin) ──────────────────────────────────
+export interface User {
+  id: number;
+  email: string;
+  fullName: string;
+  role: Role;
+  enabled: boolean;
+}
+export interface UserRequest {
+  email: string;
+  password: string;
+  fullName: string;
+  role: Role;
+}
