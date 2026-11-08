@@ -52,8 +52,8 @@ public class CustomerService {
     public void delete(Long id) {
         Customer customer = get(id);
         if (quoteRepository.existsByCustomerId(id)) {
-            throw new BusinessException("Customer " + customer.getName()
-                    + " has quotes and cannot be deleted");
+            throw new BusinessException("Le client " + customer.getName()
+                    + " a des devis et ne peut pas être supprimé");
         }
         customerRepository.delete(customer);
     }

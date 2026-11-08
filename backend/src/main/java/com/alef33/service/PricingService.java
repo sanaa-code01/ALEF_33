@@ -38,7 +38,7 @@ public class PricingService {
     /** Computes each line, then the document's TTC, HT and VAT */
     public void computeTotals(SalesDocument document, List<? extends DocumentLine> lines) {
         if (lines.isEmpty()) {
-            throw new BusinessException("A document must have at least one line");
+            throw new BusinessException("Le document doit contenir au moins une ligne");
         }
 
         BigDecimal totalTTC = BigDecimal.ZERO;
@@ -46,10 +46,10 @@ public class PricingService {
 
         for (DocumentLine line : lines) {
             if (line.getQuantity() <= 0) {
-                throw new BusinessException("Quantity must be greater than 0");
+                throw new BusinessException("La quantité doit être supérieure à 0");
             }
             if (line.getUnitPriceTTC() == null || line.getUnitPriceTTC().signum() < 0) {
-                throw new BusinessException("Unit price must be 0 or more");
+                throw new BusinessException("Le prix unitaire doit être positif ou nul");
             }
 
             BigDecimal lineTTC = lineTotalTTC(line);

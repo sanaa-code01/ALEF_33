@@ -67,7 +67,7 @@ public class QuoteService {
         Quote quote = get(id);
         requireStatus(quote, QuoteStatus.DRAFT, QuoteStatus.SENT);
         if (quote.getValidUntil() != null && quote.getValidUntil().isBefore(LocalDate.now())) {
-            throw new BusinessException("Quote " + quote.getNumber() + " has expired");
+            throw new BusinessException("Le devis " + quote.getNumber() + " a expiré");
         }
         quote.setStatus(QuoteStatus.ACCEPTED);
         return quote;
@@ -81,13 +81,12 @@ public class QuoteService {
         return quote;
     }
 
-    /** Accepted quote → new order with the same lines and totals */
     @Transactional
     public CustomerOrder convertToOrder(Long quoteId) {
         Quote quote = get(quoteId);
         requireStatus(quote, QuoteStatus.ACCEPTED);
         if (orderRepository.existsByQuoteId(quoteId)) {
-            throw new BusinessException("Quote " + quote.getNumber() + " already has an order");
+            throw new BusinessException("Le devis " + quote.getNumber() + " a déjà été transformé en commande");
         }
 
         CustomerOrder order = new CustomerOrder();
@@ -111,7 +110,17 @@ public class QuoteService {
         for (QuoteStatus s : allowed) {
             if (quote.getStatus() == s) return;
         }
-        throw new BusinessException("Quote " + quote.getNumber() + " is " + quote.getStatus()
-                + ", this action is not allowed");
+        throw new BusinessException("Le devis " + quote.getNumber() + " est « " + label(quote.getStatus())
+                + " » : action impossible");
+    }
+
+    private static String label(QuoteStatus status) {
+        return switch (status) {
+            case DRAFT -> "Brouillon";
+            case SENT -> "Envoyé";
+            case ACCEPTED -> "Accepté";
+            case REJECTED -> "Refusé";
+            case CONVERTED -> "Transformé en commande";
+        };
     }
 }

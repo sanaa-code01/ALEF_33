@@ -9,11 +9,11 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public record ProductRequest(
-        @NotBlank(message = "Reference is required") @Size(max = 50) String reference,
-        @NotBlank(message = "Designation is required") @Size(max = 200) String designation,
+        @NotBlank(message = "La référence est obligatoire") @Size(max = 50) String reference,
+        @NotBlank(message = "La désignation est obligatoire") @Size(max = 200) String designation,
         @Size(max = 1000) String description,
-        @NotNull(message = "Unit price TTC is required")
-        @DecimalMin(value = "0.0", message = "Unit price must be 0 or more") BigDecimal unitPriceTTC,
-        @DecimalMin("0.0") @DecimalMax("100.0") BigDecimal vatRate,     // optional, default 20
+        @NotNull(message = "Le prix TTC est obligatoire")
+        @DecimalMin(value = "0.0", message = "Le prix doit être positif ou nul") BigDecimal unitPriceTTC,
+        @DecimalMin(value = "0.0", message = "La TVA doit être entre 0 et 100 %") @DecimalMax(value = "100.0", message = "La TVA doit être entre 0 et 100 %") BigDecimal vatRate,     // optional, default 20
         Boolean active                                                  // optional, default true
 ) {}

@@ -117,7 +117,7 @@ class QuoteServiceTest {
 
         assertThatThrownBy(() -> service.convertToOrder(1L))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("DRAFT");
+                .hasMessageContaining("Brouillon");
         verify(orderRepository, never()).save(any());
     }
 
@@ -129,7 +129,7 @@ class QuoteServiceTest {
 
         assertThatThrownBy(() -> service.convertToOrder(1L))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("already has an order");
+                .hasMessageContaining("déjà été transformé en commande");
         verify(orderRepository, never()).save(any());
     }
 
@@ -142,7 +142,7 @@ class QuoteServiceTest {
 
         assertThatThrownBy(() -> service.accept(1L))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("expired");
+                .hasMessageContaining("expiré");
         assertThat(expired.getStatus()).isEqualTo(QuoteStatus.SENT);
     }
 

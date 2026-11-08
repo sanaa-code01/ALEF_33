@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record QuoteRequest(
-        @NotNull(message = "Customer is required") Long customerId,
+        @NotNull(message = "Le client est obligatoire") Long customerId,
         LocalDate validUntil,                                   // optional, default today + 30 days
         @Size(max = 1000) String notes,
-        @NotEmpty(message = "A quote needs at least one line") List<@Valid LineRequest> lines
+        @NotEmpty(message = "Le devis doit contenir au moins une ligne") List<@Valid LineRequest> lines
 ) {}

@@ -25,12 +25,12 @@ public class UserService {
     @Transactional(readOnly = true)
     public AppUser authenticate(String email, String rawPassword) {
         AppUser user = userRepository.findByEmailIgnoreCase(email.trim())
-                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password"));
+                .orElseThrow(() -> new InvalidCredentialsException("Email ou mot de passe incorrect"));
         if (!passwordEncoder.matches(rawPassword, user.getPasswordHash())) {
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException("Email ou mot de passe incorrect");
         }
         if (!user.isEnabled()) {
-            throw new InvalidCredentialsException("This account is disabled");
+            throw new InvalidCredentialsException("Ce compte est désactivé");
         }
         return user;
     }
@@ -38,7 +38,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public AppUser getByEmail(String email) {
         return userRepository.findByEmailIgnoreCase(email)
-                .orElseThrow(() -> new InvalidCredentialsException("User no longer exists"));
+                .orElseThrow(() -> new InvalidCredentialsException("Cet utilisateur n'existe plus"));
     }
 
     @Transactional(readOnly = true)
@@ -49,7 +49,7 @@ public class UserService {
     @Transactional
     public AppUser create(UserRequest request) {
         if (userRepository.existsByEmailIgnoreCase(request.email())) {
-            throw new BusinessException("Email already used: " + request.email());
+            throw new BusinessException("L'email " + request.email() + " est déjà utilisé");
         }
         AppUser user = new AppUser();
         user.setEmail(request.email().trim().toLowerCase());
@@ -65,7 +65,7 @@ public class UserService {
         AppUser user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", id));
         if (!enabled && user.getEmail().equalsIgnoreCase(currentUserEmail)) {
-            throw new BusinessException("You cannot disable your own account");
+            throw new BusinessException("Vous ne pouvez pas désactiver votre propre compte");
         }
         user.setEnabled(enabled);
         return user;

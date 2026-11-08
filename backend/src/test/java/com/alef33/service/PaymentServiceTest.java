@@ -109,7 +109,7 @@ class PaymentServiceTest {
 
         assertThatThrownBy(() -> service.addPayment(1L, pay("99999.00", PaymentMethod.CASH)))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("27964.00");
+                .hasMessageContaining("dépasse le reste à payer (27964.00 DH)");
         verify(paymentRepository, never()).save(any());
     }
 
@@ -131,7 +131,7 @@ class PaymentServiceTest {
 
         assertThatThrownBy(() -> service.addPayment(1L, pay("1000.00", PaymentMethod.CASH)))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("cancelled");
+                .hasMessageContaining("annulée");
     }
 
     @Test

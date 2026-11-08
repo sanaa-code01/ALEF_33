@@ -26,7 +26,7 @@ public class LineMapper {
             product = productRepository.findById(input.productId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product", input.productId()));
             if (!product.isActive()) {
-                throw new BusinessException("Product is no longer active: " + product.getReference());
+                throw new BusinessException("Le produit " + product.getReference() + " n'est plus actif");
             }
         }
 
@@ -40,10 +40,10 @@ public class LineMapper {
                 product != null ? product.getVatRate() : DEFAULT_VAT));
 
         if (line.getDesignation() == null || line.getDesignation().isBlank()) {
-            throw new BusinessException("Each line needs a designation or a product");
+            throw new BusinessException("Chaque ligne doit avoir une désignation ou un produit");
         }
         if (line.getUnitPriceTTC() == null) {
-            throw new BusinessException("Each line needs a unit price TTC or a product");
+            throw new BusinessException("Chaque ligne doit avoir un prix TTC ou un produit");
         }
         return line;
     }

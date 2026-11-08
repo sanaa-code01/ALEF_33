@@ -36,7 +36,7 @@ public class ProductService {
     @Transactional
     public Product create(ProductRequest request) {
         if (productRepository.existsByReference(request.reference())) {
-            throw new BusinessException("Reference already used: " + request.reference());
+            throw new BusinessException("La référence " + request.reference() + " est déjà utilisée");
         }
         Product product = new Product();
         apply(product, request);
@@ -47,7 +47,7 @@ public class ProductService {
     public Product update(Long id, ProductRequest request) {
         Product product = get(id);
         if (productRepository.existsByReferenceAndIdNot(request.reference(), id)) {
-            throw new BusinessException("Reference already used: " + request.reference());
+            throw new BusinessException("La référence " + request.reference() + " est déjà utilisée");
         }
         apply(product, request);
         return product;

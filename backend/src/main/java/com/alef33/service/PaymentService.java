@@ -29,28 +29,27 @@ public class PaymentService {
     private final OrderRepository orderRepository;
     private final InvoiceRepository invoiceRepository;
 
-    /** Records one payment (deposit, installment, balance or full) */
     @Transactional
     public Payment addPayment(Long orderId, PaymentInput input) {
         CustomerOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
 
         if (order.getStatus() == OrderStatus.CANCELLED) {
-            throw new BusinessException("Order " + order.getNumber() + " is cancelled");
+            throw new BusinessException("La commande " + order.getNumber() + " est annulée");
         }
         if (input.amount() == null || input.amount().signum() <= 0) {
-            throw new BusinessException("Payment amount must be greater than 0");
+            throw new BusinessException("Le montant du règlement doit être supérieur à 0");
         }
         if (input.method() == null) {
-            throw new BusinessException("Payment method is required");
+            throw new BusinessException("Le mode de règlement est obligatoire");
         }
 
         BigDecimal paid = paidFor(orderId);
         BigDecimal remaining = order.getTotalTTC().subtract(paid);
 
         if (input.amount().compareTo(remaining) > 0) {
-            throw new BusinessException("Payment of " + input.amount()
-                    + " MAD is more than the remaining amount (" + remaining + " MAD)");
+            throw new BusinessException("Le règlement de " + input.amount()
+                    + " DH dépasse le reste à payer (" + remaining + " DH)");
         }
 
         Payment payment = new Payment();
@@ -67,7 +66,6 @@ public class PaymentService {
         return payment;
     }
 
-    /** Deletes a payment entered by mistake, then updates the invoice status */
     @Transactional
     public void deletePayment(Long paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
@@ -92,7 +90,6 @@ public class PaymentService {
                 order.getTotalTTC().subtract(paid));
     }
 
-    /** Sets the invoice status from what has been paid (if the order has an invoice) */
     @Transactional
     public void refreshInvoiceStatus(Long orderId) {
         invoiceRepository.findByOrderId(orderId).ifPresent(invoice -> {
@@ -101,7 +98,6 @@ public class PaymentService {
         });
     }
 
-    /** UNPAID if nothing paid, PAID if everything paid, PARTIALLY_PAID otherwise */
     public InvoiceStatus statusFor(BigDecimal paid, BigDecimal total) {
         if (paid.signum() <= 0) return InvoiceStatus.UNPAID;
         if (paid.compareTo(total) >= 0) return InvoiceStatus.PAID;
@@ -113,7 +109,6 @@ public class PaymentService {
         return sum != null ? sum : BigDecimal.ZERO;
     }
 
-    /** Automatic label when the user doesn't choose one */
     private PaymentType guessType(BigDecimal amount, BigDecimal alreadyPaid, BigDecimal remaining) {
         boolean paysEverythingLeft = amount.compareTo(remaining) == 0;
         boolean firstPayment = alreadyPaid.signum() == 0;

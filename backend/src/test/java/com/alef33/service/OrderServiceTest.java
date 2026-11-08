@@ -107,7 +107,7 @@ class OrderServiceTest {
 
         assertThatThrownBy(() -> service.createInvoice(1L))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("already invoiced");
+                .hasMessageContaining("déjà facturée");
         verify(invoiceRepository, never()).save(any());
     }
 
@@ -119,6 +119,6 @@ class OrderServiceTest {
 
         assertThatThrownBy(() -> service.createInvoice(1L))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("cancelled");
+                .hasMessageContaining("annulée");
     }
 }

@@ -83,7 +83,7 @@ class PricingServiceTest {
     void noLines() {
         assertThatThrownBy(() -> pricing.computeTotals(new Quote(), List.of()))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("at least one line");
+                .hasMessageContaining("au moins une ligne");
     }
 
     @Test
@@ -91,10 +91,10 @@ class PricingServiceTest {
     void invalidLines() {
         assertThatThrownBy(() -> pricing.computeTotals(new Quote(), List.of(quoteLine("Four", 0, "100"))))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("Quantity");
+                .hasMessageContaining("quantité");
 
         assertThatThrownBy(() -> pricing.computeTotals(new Quote(), List.of(quoteLine("Four", 1, "-5"))))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("price");
+                .hasMessageContaining("prix");
     }
 }

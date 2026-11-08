@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 public record LineRequest(
         Long productId,
         @Size(max = 255) String designation,
-        @NotNull(message = "Quantity is required") @Min(value = 1, message = "Quantity must be at least 1") Integer quantity,
-        @DecimalMin(value = "0.0", message = "Unit price must be 0 or more") BigDecimal unitPriceTTC,
-        @DecimalMin("0.0") @DecimalMax("100.0") BigDecimal vatRate
+        @NotNull(message = "La quantité est obligatoire") @Min(value = 1, message = "La quantité doit être au moins 1") Integer quantity,
+        @DecimalMin(value = "0.0", message = "Le prix doit être positif ou nul") BigDecimal unitPriceTTC,
+        @DecimalMin(value = "0.0", message = "La TVA doit être entre 0 et 100 %") @DecimalMax(value = "100.0", message = "La TVA doit être entre 0 et 100 %") BigDecimal vatRate
 ) {
     public LineInput toInput() {
         return new LineInput(productId, designation, quantity, unitPriceTTC, vatRate);

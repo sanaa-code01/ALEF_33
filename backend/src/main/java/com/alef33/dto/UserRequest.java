@@ -7,9 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UserRequest(
-        @NotBlank(message = "Email is required") @Email(message = "Invalid email") String email,
-        @NotBlank(message = "Password is required")
-        @Size(min = 8, message = "Password must have at least 8 characters") String password,
-        @NotBlank(message = "Full name is required") @Size(max = 150) String fullName,
-        @NotNull(message = "Role is required") Role role
+        @NotBlank(message = "L'email est obligatoire") @Email(message = "L'email n'est pas valide") String email,
+        @NotBlank(message = "Le mot de passe est obligatoire")
+        @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères") String password,
+        @NotBlank(message = "Le nom complet est obligatoire") @Size(max = 150) String fullName,
+        @NotNull(message = "Le rôle est obligatoire") Role role
 ) {}
