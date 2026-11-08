@@ -129,3 +129,41 @@ input.ng-invalid.ng-touched { border-color: var(--danger); }
 }
 .toast.error { background: var(--danger); }
 .nowrap { white-space: nowrap; }
+
+/* ── Step 10b: documents ─────────────────────────────────── */
+.nav-separator { height: 1px; background: var(--border); margin: 0.6rem 0.5rem; }
+.section { margin-bottom: 1rem; }
+.page-help { margin: -0.5rem 0 1rem; }
+.table.clickable tbody tr { cursor: pointer; }
+.table.compact td { padding: 0.45rem 0.5rem; }
+.grid-3 { display: grid; grid-template-columns: 1.2fr 0.8fr 1.5fr; gap: 0 1rem; }
+.lines-table td { padding: 0.35rem 0.4rem; vertical-align: middle; }
+.lines-table input, .lines-table select { width: 100%; padding: 0.45rem 0.5rem; }
+input.num { text-align: right; }
+.doc-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.doc-header p { margin: 0.35rem 0 0; }
+.actions-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 1rem; }
+.btn { text-decoration: none; display: inline-block; }
+.invoice-chip { display: inline-flex; gap: 0.4rem; align-items: center; font-weight: 600; margin-left: auto; }
+.totals { margin: 1rem 0 0 auto; max-width: 320px; }
+.totals div { display: flex; justify-content: space-between; padding: 0.4rem 0.75rem; }
+.totals .total-ttc { background: var(--orange-light); border-radius: 8px; color: var(--orange-dark); font-size: 1.1rem; }
+.form-footer { display: flex; justify-content: flex-end; gap: 0.5rem; }
+.two-columns { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem; align-items: start; }
+.two-columns .section { margin-bottom: 0; }
+.progress { height: 10px; background: #eceae5; border-radius: 999px; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--ok); transition: width 0.3s; }
+.paid-summary { display: flex; justify-content: space-between; margin: 0.6rem 0 1rem; }
+.payment-form { border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; }
+.payment-form h3 { margin: 0 0 0.75rem; font-size: 1rem; color: var(--text-soft); }
+.quick-amounts { display: flex; gap: 0.5rem; margin-bottom: 0.85rem; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.stat { display: flex; flex-direction: column; gap: 0.3rem; }
+.stat span { color: var(--muted); font-size: 0.85rem; }
+.stat strong { font-size: 1.3rem; }
+.text-danger { color: var(--danger); }
+.text-ok { color: var(--ok); }
+.badge-info { background: #e3f0fb; color: #1e5a96; }
+.badge-ko { background: #fdecea; color: var(--danger); }
+.badge-big { font-size: 0.9rem; padding: 0.35rem 0.8rem; }
+@media (max-width: 1100px) { .two-columns, .grid-3 { grid-template-columns: 1fr; } }

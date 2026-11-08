@@ -11,6 +11,10 @@ import { AuthService } from '../core/auth.service';
       <aside class="sidebar">
         <img src="logo-alef33.jpg" alt="ALEF 33" class="sidebar-logo" />
         <nav>
+          <a routerLink="/devis" routerLinkActive="active">Devis</a>
+          <a routerLink="/commandes" routerLinkActive="active">Commandes</a>
+          <a routerLink="/factures" routerLinkActive="active">Factures</a>
+          <span class="nav-separator"></span>
           <a routerLink="/clients" routerLinkActive="active">Clients</a>
           <a routerLink="/produits" routerLinkActive="active">Produits</a>
         </nav>
